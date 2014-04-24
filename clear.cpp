@@ -153,9 +153,9 @@ void LOWRANKCOIL::update_threshold( Array< Array<complex<float>,3>,2 > &image, i
 	cout << "Getting Low Rank threshold (N=" << N << ")(Np = " << Np << ")" << endl;
 	smax = 0.0;
 	
-	int block_x_start=0;
-	int block_y_start=0;
-	int block_z_start=0;
+//	int block_x_start=0;
+//	int block_y_start=0;
+//	int block_z_start=0;
 	
 	int block_x_stop= (int)( Nx / block_size_x );
 	int block_y_stop= (int)( Ny / block_size_y );
@@ -244,9 +244,9 @@ void LOWRANKCOIL::thresh( Array< Array<complex<float>,3>,2 > &image, int dim){
 	int Ny =image(0,0).extent(secondDim);
 	int Nz =image(0,0).extent(thirdDim);
 	
-	int step_size_x = (int)ceil((float)block_size_x);
-	int step_size_y = (int)ceil((float)block_size_y);
-	int step_size_z = (int)ceil((float)block_size_z);
+//	int step_size_x = (int)ceil((float)block_size_x);
+//	int step_size_y = (int)ceil((float)block_size_y);
+//	int step_size_z = (int)ceil((float)block_size_z);
 	
 	float block_iter = 4;
 	

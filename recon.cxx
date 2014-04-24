@@ -124,11 +124,11 @@ int main( int argc, char **argv){
 	ArrayRead(fieldmap,"FieldMap.dat");
 
 //  No CG for comparison
-//	if(lambda_lowrank == 0){
-//		dideal_recon_2D_CG( kx, ky, kdata, fieldmap, kt, freqs, Ns,lambda_space,lambda_time,max_iter);
-//	}else{
+	if(lambda_lowrank == 0){
+		dideal_recon_2D_CG( kx, ky, kdata, fieldmap, kt, freqs, Ns,lambda_space,lambda_time,max_iter);
+	}else{
 		dideal_recon_2D_Gradient( kx, ky, kdata, fieldmap, kt, freqs, Ns,lambda_space,lambda_time,lambda_lowrank,max_iter);
-//	}
+	}
 
 	return(0);
 }
