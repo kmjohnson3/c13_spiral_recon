@@ -123,7 +123,6 @@ int main( int argc, char **argv){
 	Array< float,3>fieldmap(Nx,Ny,Nt,ColumnMajorArray<3>());
 	ArrayRead(fieldmap,"FieldMap.dat");
 
-//  No CG for comparison
 	if(lambda_lowrank == 0){
 		dideal_recon_2D_CG( kx, ky, kdata, fieldmap, kt, freqs, Ns,lambda_space,lambda_time,max_iter);
 	}else{
@@ -322,7 +321,7 @@ int dideal_recon_2D_CG(
 	P = R;
 
 	// Conjugate Gradient
-	double error0=0.0;
+	float error0=0.0;
 	float reg_scale2=0.0; 
 	for(int iteration =0; iteration< max_iter; iteration++){
 		
@@ -335,6 +334,7 @@ int dideal_recon_2D_CG(
 		transpose_dideal(diff_data,LHS,kx,ky,ktimes,fieldmap,freqs);
 
 		// Convolve with TV
+		Reg = complex<float>(0.0,0.0);
 		for(int sp=0; sp<Ns; sp++){
 			for(int t=0;t<Nt;t++){
 				for(int j=0;j<Ny;j++){
@@ -351,11 +351,7 @@ int dideal_recon_2D_CG(
 						Reg(i,j,t,sp) +=lambda_time*complex<float>(2.0,0)*P(i,j,t,sp);
 						Reg(i,j,t,sp) -=lambda_time*P(i,j,(Nt+t-1)%Nt,sp);
 						Reg(i,j,t,sp) -=lambda_time*P(i,j,(Nt+t+1)%Nt,sp);
-						
-						
 		}}}}			
-
-
 
 		if(iteration==0){
 			error0 = ArrayEnergy(R);
@@ -397,7 +393,7 @@ int dideal_recon_2D_CG(
 			for(int t=0;t<Nt;t++){
 				for(int j=0;j<Ny;j++){
 					for(int i=0;i<Nx;i++){			
-						P(i,j,t,sp) += R(i,j,t,sp) + scale2*P(i,j,t,sp);
+						P(i,j,t,sp) = R(i,j,t,sp) + scale2*P(i,j,t,sp);
 		}}}}
 
 		char fname[80];
@@ -461,7 +457,7 @@ int dideal_recon_2D_Gradient(
 	
 	
 	// Conjugate Gradient
-	double error0=0.0;
+	float error0=0.0;
 	float reg_scale2=0.0; 
 	for(int iteration =0; iteration< max_iter; iteration++){
 		
@@ -479,6 +475,7 @@ int dideal_recon_2D_Gradient(
 		transpose_dideal(diff_data,R,kx,ky,ktimes,fieldmap,freqs);
 
 		// Convolve with TV
+		Reg = complex<float>(0.0,0.0);
 		for(int sp=0; sp<Ns; sp++){
 			for(int t=0;t<Nt;t++){
 				for(int j=0;j<Ny;j++){
@@ -594,7 +591,7 @@ void lowrank_thresh( Array< complex<float>,4> &image, float thresh){
 	S.zeros(Np,Nt); // Pixels x Coils
 	
 	cout << "Thresh with " << thresh << endl;
-	double smax = thresh*max(s);
+	float smax = thresh*max(s);
 	for(int pos =0; pos< min(Nt,Np); pos++){
 		S(pos,pos)=   max( s(pos) - smax, 0.0 );
 	}
