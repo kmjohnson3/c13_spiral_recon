@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 project(MRI_RECON)
-set(PROGNAME recon_binary)
+set(PROGNAME c13_recon_binary)
 
 file(GLOB LOCAL_INCS ${CMAKE_SOURCE_DIR}/*.h)
 
@@ -28,8 +28,8 @@ target_link_libraries(RECONLIB ${LOCAL_LIBS})
 #--------------------------------------
 # Support for Command Line Binary
 #--------------------------------------
-add_executable(recon_binary recon.cxx ${LOCAL_INCS})
-target_link_libraries(recon_binary ${LOCAL_LIBS} RECONLIB)
+add_executable(c13_recon_binary recon.cxx ${LOCAL_INCS})
+target_link_libraries(c13_recon_binary ${LOCAL_LIBS} RECONLIB)
 
 
 
